@@ -4,7 +4,7 @@ An Alexa Skill for getting the current **Julian Date**. This is a sample program
 <hr>
 
 ## License 
-[GNU GENERAL PUBLIC LICENSE, Version 3](LICENSE)
+[**GNU GENERAL PUBLIC LICENSE, Version 3**](LICENSE)
 ## Acknowledgements
 
 ## Terms of Use
@@ -22,11 +22,11 @@ This program does not, by itself, collect or use any private information. It is 
 
 ## Author
 
-- [@jamesflippin](https://www.github.com/jamesflippin)
+- [**@jamesflippin**](https://www.github.com/jamesflippin)
 
 ## Language
 
 Writen in Python. Free for anyone to use.
 
 ## GitHub Repository
-[https://github.com/JamesFlippin/AlexaSkill_JulianDate](https://github.com/JamesFlippin/AlexaSkill_JulianDate)
+[**https://github.com/JamesFlippin/AlexaSkill_JulianDate**](https://github.com/JamesFlippin/AlexaSkill_JulianDate)
