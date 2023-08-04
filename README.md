@@ -1,5 +1,5 @@
 # Alexa Skill: Julian Date
-An Alexa Skill for getting the current Julian Date
+An Alexa Skill for getting the current **Julian Date**. This is a sample program that currently only does one thing. I plan to expand it in future to include allowing the user to do lookups for specific dates and julian date formats. This is my first attempt at an Alexa Skill so it is very limited for a first test/try.
 
 <hr>
 
