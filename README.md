@@ -5,6 +5,34 @@ An Alexa Skill for getting the current **Julian Date**. This is a sample program
 
 ## License 
 [**GNU GENERAL PUBLIC LICENSE, Version 3**](LICENSE)
+
+## Available commands for the Skill
+
+### To get the current Julian date
+
+You can ask:
+
+- For today?
+
+- What is today's Julian Date?
+
+- Current Julian Date?
+
+- Get the Julian Date?
+
+### To see if a particular year is a leap year
+
+- Is [year] a leap year?
+
+Example:
+
+`Alexa, Ask Julian Date is 2024 a leap year?`
+
+or:
+
+`Alexa, open Julian Date` then ask `Is 2450 a leap year?`
+
+
 ## Acknowledgements
 
 ## Terms of Use
