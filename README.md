@@ -6,7 +6,7 @@ An Alexa Skill for getting the current **Julian Date**. This is a sample program
 ## License 
 [**GNU GENERAL PUBLIC LICENSE, Version 3**](LICENSE)
 
-## Available commands for the Skill
+## Available commands for this Skill
 
 ### To get the current Julian date
 
