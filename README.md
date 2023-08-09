@@ -19,6 +19,7 @@ This program does not, by itself, collect or use any private information. It is 
 | Release | Date     | Description                |
 | :-------- | :------- | :------------------------- |
 | `Initial` | `8/4/2023` | **Initial Release** |
+| `Update` | `8/9/2023` | A change to simplfy the skill usage for the user, by providing an intial response that includes the current date/Julian date as well as available commands |
 
 ## Author
 
