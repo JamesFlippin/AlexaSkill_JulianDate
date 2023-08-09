@@ -20,11 +20,28 @@ You can ask:
 
 - Get the Julian Date?
 
+#### Examples
+
+`Alexa, Ask Julian Date For Today?`
+
+`Alexa, Ask Julian Date for Current Julian Date?`
+
+`Alexa, Ask Julian Date Get the Julian Date?`
+
+or:
+
+`Alexa, Open Julian Date` then `Today?`
+
+`Alexa, Open Julian Date` then `For Today?`
+
+`Alexa, Open Julian Date` then `Current Julian Date?`
+
+`Alexa, Open Julian Date` then `Get the Julian Date?`
+
 ### To see if a particular year is a leap year
 
 - Is [year] a leap year?
-
-Example:
+#### Examples
 
 `Alexa, Ask Julian Date is 2024 a leap year?`
 
