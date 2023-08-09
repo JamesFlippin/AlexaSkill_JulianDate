@@ -1,13 +1,28 @@
 # -*- coding: utf-8 -*-
 
-# This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK for Python.
+# Programmer: James Flippin
+# About me: https://JamesFlippin.github.io
+# GitHub profile page: https://github.com/JamesFlippin
+# GitHub Source Code for this skill can be found at: https://github.com/JamesFlippin/AlexaSkill_JulianDate
+# License: GNU GENERAL PUBLIC LICENSE, Version 3
+# Version: 2023-08-09
+
 # Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
 # session persistence, api calls, and more.
-# This sample is built using the handler classes approach in skill builder.
+# This code is built/based on using the handler classes approach in skill builder.
 
+# -------------------------------------------------
+# Imports - My additional imports
+# -------------------------------------------------
 import datetime
+from datetime import date
 import calendar
+# -------------------------------------------------
+# -------------------------------------------------
 
+# -------------------------------------------------
+# Imports - Alexa Standard
+# -------------------------------------------------
 import logging
 import ask_sdk_core.utils as ask_utils
 
@@ -15,28 +30,25 @@ from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.handler_input import HandlerInput
-
 from ask_sdk_model import Response
+# -------------------------------------------------
+# -------------------------------------------------
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 # -------------------------------------------------
-# Added Class for getJulianDateIntentHandler()
+# My Added Class for AboutIntentHandler()
 # -------------------------------------------------
-class getJulianDateIntentHandler(AbstractRequestHandler):
-    """Handler for Julian Date Intent."""
+class AboutIntentHandler(AbstractRequestHandler):
+    """Handler for About Intent. Tells the skill user a little about me and how they can find out more about me."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return ask_utils.is_intent_name("getJulianDate")(handler_input)
+        return ask_utils.is_intent_name("about")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        # Get the day of the year
-        day_of_year = datetime.datetime.now().timetuple().tm_yday
-        # Output
-        speak_output = "The current Julian date in US Central time is " + str(day_of_year)
-        # speak_output = "Welcome, your random number is " + str(rnum)
+        speak_output="This skill was written by James Flippin as an Amazon Alexa skills learning experience. It was inspired by Dawn, who is the inspiration for so much of what I do. For more information about me please visit https://JamesFlippin.github.io"
 
         return (
             handler_input.response_builder
@@ -47,8 +59,36 @@ class getJulianDateIntentHandler(AbstractRequestHandler):
 # -------------------------------------------------
 # -------------------------------------------------
 
+# -------------------------------------------------
+# My Added Class for getJulianDateIntentHandler()
+# -------------------------------------------------
+class getJulianDateIntentHandler(AbstractRequestHandler):
+    """Handler for getJulianDate Intent. It uses the current date value to provide feedback on the current date and Julian Date."""
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return ask_utils.is_intent_name("getJulianDate")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+
+        # new Output
+        speak_output="For " + date.today().strftime('%B %d %Y')  + " the Julian Date is " + date.today().strftime('%j')
+
+        return (
+            handler_input.response_builder
+                .speak(speak_output)
+                # .ask("add a reprompt if you want to keep the session open for the user to respond")
+                .response
+        )
+# -------------------------------------------------
+# -------------------------------------------------
+
+
+# -------------------------------------------------
+# My modified default Alexa LaunchRequestHandler()
+# -------------------------------------------------
 class LaunchRequestHandler(AbstractRequestHandler):
-    """Handler for Skill Launch."""
+    """Handler for Skill Launch. It gives an imediate response with the current date and Julian datae and also informs the user of specific response options for this Alexa skill"""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
 
@@ -56,7 +96,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speak_output = "Welcome, you can say current julian date or for today. Which would you like to try?"
+
+        # New Output
+        speak_output="Welcome, for " + date.today().strftime('%B %d %Y')  + ", the Julian Date is " + date.today().strftime('%j') + ". Commands you can say are Current Julian Date or For Today or About. Which would you like to try?"
 
         return (
             handler_input.response_builder
@@ -64,6 +106,8 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 .ask(speak_output)
                 .response
         )
+# -------------------------------------------------
+# -------------------------------------------------
 
 class HelpIntentHandler(AbstractRequestHandler):
     """Handler for Help Intent."""
@@ -73,7 +117,7 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speak_output = "You can say For today or Current Julian Date! How can I help?"
+        speak_output = "You can say For today or Current Julian Date or About! How can I help?"
 
         return (
             handler_input.response_builder
@@ -185,13 +229,25 @@ sb = SkillBuilder()
 # -------------------------------------------------
 sb.add_request_handler(getJulianDateIntentHandler())
 # -------------------------------------------------
+# -------------------------------------------------
+
+# -------------------------------------------------
+# -------------------------------------------------
+# Added Handler for AboutIntentHandler()
+# -------------------------------------------------
+sb.add_request_handler(AboutIntentHandler())
+# -------------------------------------------------
+# -------------------------------------------------
+
+# -------------------------------------------------
+# Default Alexa Skill handlers
+# -------------------------------------------------
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 sb.add_request_handler(IntentReflectorHandler()) # make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
-
 sb.add_exception_handler(CatchAllExceptionHandler())
 
 lambda_handler = sb.lambda_handler()
