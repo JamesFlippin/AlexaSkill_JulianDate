@@ -72,16 +72,31 @@ class IsYearALeapYearIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        # Logic below courtesy of ChatGPT and OpenAI (https://chat.openai.com)
-        # Check to see if the year is divisible by 4 and not divisible by 100, or if it's divisible by 400
+        # Create an object to reference and retrieve slot variable values
         slots = handler_input.request_envelope.request.intent.slots
+        # Convert the user provided year slot value to an integer value, we are relying on the Amazon.number
+        # data type and the model to prevent non-numbers being provided
         userYear = int(slots["userYear"].value)
-        #speak_output = slots["userYear"].value + " is the year you provided."
 
-        if (userYear % 4 == 0 and userYear % 100 != 0) or (userYear % 400 == 0):
-            speak_output = str(userYear) + " is a leap year." # It is a leap year
+        futureTag = "" # Just for fun, a variable to hold additional output text if the date is substantially in the future
+        
+        #Gregorian calendar - https://en.wikipedia.org/wiki/Gregorian_calendar
+        # The current Gregorian calendar went into effect in October 1582 October 1582, so lets not look before 1582
+        if userYear < 1582:
+            speak_output = "I'm sorry, but the current Gregorian calendar went into effect in October 1582 AD."
+            speak_output += "Please choose a date that is after 1528 AD. "
+            speak_output += "For more information on the Gregorian calendar and leap years, please visit 'Gregorian Calender' on www.wikipedia.org"
         else:
-            speak_output = str(userYear) + " is not a leap year." # It isn't a leap year
+            # A little fun for someone asking about the future
+            if userYear > 2232: # Captain Kirk
+                futureTag = " Wow! You must be from the future. Say 'Hi'! to Captain Kirk for me, he was born March 22, 2233."
+                
+            # Logic below courtesy of ChatGPT and OpenAI (https://chat.openai.com)
+            # Check to see if the year is divisible by 4 and not divisible by 100, or if it's divisible by 400
+            if (userYear % 4 == 0 and userYear % 100 != 0) or (userYear % 400 == 0):
+                speak_output = str(userYear) + " is a leap year." + futureTag # It is a leap year 
+            else:
+                speak_output = str(userYear) + " is not a leap year." + futureTag # It isn't a leap year
 
         return (
             handler_input.response_builder
@@ -132,7 +147,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
 
         # New Output
-        speak_output="Welcome, for " + date.today().strftime('%B %d %Y')  + ", the Julian Date is " + date.today().strftime('%j') + ". Commands you can say are Current Julian Date or For Today or About. You can also ask 'Is [year number, such as 2024] a leap year?' Which would you like to try?"
+        speak_output="Welcome, for " + date.today().strftime('%B %d %Y')  + ", the Julian Date is " + date.today().strftime('%j') + ". Commands you can say are: 'Current Julian Date' or 'For Today' or 'Today' or 'About'. You can also ask 'Is [year number, such as 2024] a leap year?' Which would you like to try?"
 
         return (
             handler_input.response_builder
@@ -151,7 +166,7 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speak_output = "You can say For today or Current Julian Date or About! How can I help?"
+        speak_output = "Commands you can say are: 'Current Julian Date' or 'For Today' or 'Today' or 'About'. You can also ask 'Is [year number, such as 2024] a leap year?' How can I help?"
 
         return (
             handler_input.response_builder
