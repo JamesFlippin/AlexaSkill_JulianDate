@@ -59,6 +59,40 @@ class AboutIntentHandler(AbstractRequestHandler):
 # -------------------------------------------------
 # -------------------------------------------------
 
+
+# -------------------------------------------------
+# My Added Class for IsYearALeapYearIntentHandler()
+# -------------------------------------------------
+class IsYearALeapYearIntentHandler(AbstractRequestHandler):
+    """Handler for IsYearALeapYear Intent. It checks to see if the user provided year (number) is a leap year or not."""
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return ask_utils.is_intent_name("IsYearALeapYear")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+
+        # Logic below courtesy of ChatGPT and OpenAI (https://chat.openai.com)
+        # Check to see if the year is divisible by 4 and not divisible by 100, or if it's divisible by 400
+        slots = handler_input.request_envelope.request.intent.slots
+        userYear = int(slots["userYear"].value)
+        #speak_output = slots["userYear"].value + " is the year you provided."
+
+        if (userYear % 4 == 0 and userYear % 100 != 0) or (userYear % 400 == 0):
+            speak_output = str(userYear) + " is a leap year." # It is a leap year
+        else:
+            speak_output = str(userYear) + " is not a leap year." # It isn't a leap year
+
+        return (
+            handler_input.response_builder
+                .speak(speak_output)
+                # .ask("add a reprompt if you want to keep the session open for the user to respond")
+                .response
+        )
+# -------------------------------------------------
+# -------------------------------------------------
+
+
 # -------------------------------------------------
 # My Added Class for getJulianDateIntentHandler()
 # -------------------------------------------------
@@ -98,7 +132,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
 
         # New Output
-        speak_output="Welcome, for " + date.today().strftime('%B %d %Y')  + ", the Julian Date is " + date.today().strftime('%j') + ". Commands you can say are Current Julian Date or For Today or About. Which would you like to try?"
+        speak_output="Welcome, for " + date.today().strftime('%B %d %Y')  + ", the Julian Date is " + date.today().strftime('%j') + ". Commands you can say are Current Julian Date or For Today or About. You can also ask 'Is [year number, such as 2024] a leap year?' Which would you like to try?"
 
         return (
             handler_input.response_builder
@@ -225,17 +259,11 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
 sb = SkillBuilder()
 
 # -------------------------------------------------
-# Added Handler for getJulianDateIntentHandler()
+# Added My custom Handlers for this skill
 # -------------------------------------------------
-sb.add_request_handler(getJulianDateIntentHandler())
-# -------------------------------------------------
-# -------------------------------------------------
-
-# -------------------------------------------------
-# -------------------------------------------------
-# Added Handler for AboutIntentHandler()
-# -------------------------------------------------
-sb.add_request_handler(AboutIntentHandler())
+sb.add_request_handler(getJulianDateIntentHandler()) # Added Handler for AboutIntentHandler()
+sb.add_request_handler(AboutIntentHandler()) # Added Handler for AboutIntentHandler()
+sb.add_request_handler(IsYearALeapYearIntentHandler()) # Added Handler for IsYearALeapYearIntentHandler()
 # -------------------------------------------------
 # -------------------------------------------------
 
